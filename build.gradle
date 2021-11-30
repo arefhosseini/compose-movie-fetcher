@@ -1,4 +1,4 @@
-import com.fearefull.composemoviefetcher.buildsrc.Libs
+import com.fearefull.composemoviefetcher.buildsrc.Dependencies
 import com.fearefull.composemoviefetcher.buildsrc.Versions
 
 buildscript {
@@ -7,54 +7,20 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath Libs.androidGradlePlugin
-        classpath Libs.Kotlin.gradlePlugin
+        classpath Dependencies.Gradle.androidBuildPlugin
+        classpath Dependencies.Gradle.hiltPlugin
+        classpath Dependencies.Gradle.kotlinPlugin
+        classpath Dependencies.Gradle.kotlinSerializationPlugin
     }
 }
 
-plugins {
-    id 'com.diffplug.spotless' version '5.17.1'
-}
-
-subprojects {
+allprojects {
     repositories {
         google()
         mavenCentral()
-
-        if (!Libs.AndroidX.Compose.snapshot.isEmpty()) {
-            maven { url "https://androidx.dev/snapshots/builds/${Libs.AndroidX.Compose.snapshot}/artifacts/repository/" }
-        }
-        if (Libs.Accompanist.version.endsWith("SNAPSHOT")) {
-            maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
-        }
     }
+}
 
-    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
-        kotlinOptions {
-            // Treat all Kotlin warnings as errors (disabled by default)
-            allWarningsAsErrors = project.hasProperty("warningsAsErrors") ? project.warningsAsErrors : false
-            // Opt-in to experimental compose APIs
-            freeCompilerArgs += '-Xopt-in=kotlin.RequiresOptIn'
-
-            jvmTarget = '1.8'
-        }
-    }
-
-    configurations.configureEach {
-        // androidx.test forces JUnit, 4.12, prefer 4.13
-        resolutionStrategy {
-            force Libs.JUnit.junit
-        }
-    }
-
-    apply plugin: 'com.diffplug.spotless'
-    spotless {
-        kotlin {
-            target '**/*.kt'
-            targetExclude("$buildDir/**/*.kt")
-            targetExclude('bin/**/*.kt')
-            ktlint(Versions.ktlint).userData([android: "true"])
-            licenseHeaderFile rootProject.file('spotless/copyright.kt')
-        }
-    }
+task clean(type: Delete) {
+    delete rootProject.buildDir
 }

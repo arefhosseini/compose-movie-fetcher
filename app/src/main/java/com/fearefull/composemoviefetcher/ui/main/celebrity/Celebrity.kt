@@ -1,4 +1,4 @@
-package com.fearefull.composemoviefetcher.ui.main.home
+package com.fearefull.composemoviefetcher.ui.main.celebrity
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -8,18 +8,18 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-
-/**
- * Created by Aref Hosseini on ۱۷/۱۱/۲۰۲۱.
- */
+import androidx.compose.ui.res.stringResource
+import com.fearefull.composemoviefetcher.R
 
 @Composable
-fun Home() {
+fun Celebrity() {
     Column(
-        modifier = Modifier.fillMaxWidth().fillMaxHeight(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Home")
+        Text(stringResource(id = R.string.celebrity))
     }
 }

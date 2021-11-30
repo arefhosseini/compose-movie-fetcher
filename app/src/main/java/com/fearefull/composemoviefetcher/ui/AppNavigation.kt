@@ -6,7 +6,8 @@ import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.fearefull.composemoviefetcher.ui.auth.Auth
-import com.fearefull.composemoviefetcher.ui.main.home.Home
+import com.fearefull.composemoviefetcher.ui.main.celebrity.Celebrity
+import com.fearefull.composemoviefetcher.ui.main.movie.Movie
 import com.fearefull.composemoviefetcher.ui.main.profile.Profile
 import com.fearefull.composemoviefetcher.ui.splash.Splash
 
@@ -19,19 +20,21 @@ sealed class Screen(val route: String) {
     object Auth : Screen("auth")
 
     // main tabs
-    object Home : Screen("home")
+    object Movie : Screen("movie")
+    object Celebrity : Screen("celebrity")
     object Profile : Screen("profile")
 
     companion object {
         fun hasRoute(route: String?): Boolean =
             route?.let {
-                route.contains(Home.route) || route.contains(Profile.route)
+                route.contains(Movie.route) || route.contains(Celebrity.route) || route.contains(Profile.route)
             } ?: kotlin.run { false }
     }
 }
 
 sealed class MainScreen(val route: String) {
-    object Home : MainScreen("home")
+    object Movie : MainScreen("movie")
+    object Celebrity : MainScreen("celebrity")
     object Profile : MainScreen("profile")
 
     fun createRoute(root: Screen) = "${root.route}/$route"
@@ -49,7 +52,8 @@ internal fun AppNavigation(
     ) {
         addSplash(appState)
         addAuth(appState)
-        addHomeTopLevel(appState)
+        addMovieTopLevel(appState)
+        addCelebrityTopLevel(appState)
         addProfileTopLevel(appState)
     }
 }
@@ -74,13 +78,23 @@ private fun NavGraphBuilder.addAuth(
     }
 }
 
-private fun NavGraphBuilder.addHomeTopLevel(
+private fun NavGraphBuilder.addMovieTopLevel(
     appState: MovieFetcherAppState) {
     navigation(
-        route = Screen.Home.route,
-        startDestination = MainScreen.Home.createRoute(Screen.Home)
+        route = Screen.Movie.route,
+        startDestination = MainScreen.Movie.createRoute(Screen.Movie)
     ) {
-        addHome(appState)
+        addMovie(appState)
+    }
+}
+
+private fun NavGraphBuilder.addCelebrityTopLevel(
+    appState: MovieFetcherAppState) {
+    navigation(
+        route = Screen.Celebrity.route,
+        startDestination = MainScreen.Celebrity.createRoute(Screen.Celebrity)
+    ) {
+        addCelebrity(appState)
     }
 }
 
@@ -94,11 +108,19 @@ private fun NavGraphBuilder.addProfileTopLevel(
     }
 }
 
-private fun NavGraphBuilder.addHome(
+private fun NavGraphBuilder.addMovie(
     appState: MovieFetcherAppState,
 ) {
-    composable(MainScreen.Home.createRoute(Screen.Home)) {
-        Home()
+    composable(MainScreen.Movie.createRoute(Screen.Movie)) {
+        Movie()
+    }
+}
+
+private fun NavGraphBuilder.addCelebrity(
+    appState: MovieFetcherAppState,
+) {
+    composable(MainScreen.Celebrity.createRoute(Screen.Celebrity)) {
+        Celebrity()
     }
 }
 

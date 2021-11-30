@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">ComposeMovieFetcher</string>
-    
-    <string name="home">Home</string>
+    <string name="api_key"></string>
+
+    <string name="movie">Movie</string>
+    <string name="celebrity">Celebrity</string>
     <string name="profile">Profile</string>
 </resources>

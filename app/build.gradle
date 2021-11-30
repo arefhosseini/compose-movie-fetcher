@@ -1,19 +1,23 @@
-import com.fearefull.composemoviefetcher.buildsrc.Libs
+import com.fearefull.composemoviefetcher.buildsrc.Dependencies
+import com.fearefull.composemoviefetcher.buildsrc.Versions
 
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'kotlinx-serialization'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
-    compileSdk 31
+    compileSdk Versions.compileSdk
 
     defaultConfig {
         applicationId "com.fearefull.composemoviefetcher"
-        minSdk 21
-        targetSdk 31
-        versionCode 1
-        versionName "1.0"
+        minSdk Versions.minSdk
+        targetSdk Versions.targetSdk
+        versionCode Versions.versionCode
+        versionName Versions.versionName
         vectorDrawables.useSupportLibrary true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -49,40 +53,67 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion Libs.AndroidX.Compose.version
+        kotlinCompilerExtensionVersion Dependencies.Compose.version
     }
 }
 
+kapt {
+    correctErrorTypes = true
+}
+
 dependencies {
-    implementation Libs.Kotlin.stdlib
-    implementation Libs.Coroutines.android
+    implementation Dependencies.Kotlin.stdLib
+    implementation Dependencies.Kotlin.jsonSerialization
 
-    implementation Libs.AndroidX.coreKtx
-    implementation Libs.AndroidX.navigation
-    implementation Libs.AndroidX.Activity.activityCompose
-    implementation Libs.AndroidX.ConstraintLayout.constraintLayoutCompose
+    // AndroidX
+    implementation Dependencies.AndroidX.palette
+    implementation Dependencies.AndroidX.browser
+    implementation Dependencies.AndroidX.dataStore
+    implementation Dependencies.AndroidX.Ktx.core
 
-    implementation Libs.AndroidX.Compose.runtime
-    implementation Libs.AndroidX.Compose.foundation
-    implementation Libs.AndroidX.Compose.layout
-    implementation Libs.AndroidX.Compose.ui
-    implementation Libs.AndroidX.Compose.uiUtil
-    implementation Libs.AndroidX.Compose.material
-    implementation Libs.AndroidX.Compose.animation
-    implementation Libs.AndroidX.Compose.iconsExtended
-    implementation Libs.AndroidX.Compose.tooling
+    // Compose
+    implementation Dependencies.Compose.runtime
+    implementation Dependencies.Compose.foundation
+    implementation Dependencies.Compose.layout
+    implementation Dependencies.Compose.ui
+    implementation Dependencies.Compose.uiUtil
+    implementation Dependencies.Compose.material
+    implementation Dependencies.Compose.icons
+    implementation Dependencies.Compose.animation
+    implementation Dependencies.Compose.paging
+    implementation Dependencies.Compose.constraintLayout
+    implementation Dependencies.Compose.activity
+    implementation Dependencies.Compose.viewModel
+    implementation Dependencies.Compose.tooling
 
-    implementation Libs.Accompanist.insets
+    // Accompanist
+    implementation Dependencies.Compose.Accompanist.insets
+    implementation Dependencies.Compose.Accompanist.insetsUi
+    implementation Dependencies.Compose.Accompanist.pager
 
-    implementation Libs.Coil.coilCompose
+    // Navigation
+    implementation Dependencies.Compose.Navigation.runtime
 
-    androidTestImplementation Libs.AndroidX.Activity.activityCompose
+    // Coil Image
+    implementation Dependencies.coil
 
-    androidTestImplementation Libs.JUnit.junit
-    androidTestImplementation Libs.AndroidX.Test.core
-    androidTestImplementation Libs.AndroidX.Test.espressoCore
-    androidTestImplementation Libs.AndroidX.Test.rules
-    androidTestImplementation Libs.AndroidX.Test.Ext.junit
-    androidTestImplementation Libs.AndroidX.Compose.uiTest
-    debugImplementation Libs.AndroidX.Compose.uiTestManifest
+    // Hilt
+    implementation Dependencies.Hilt.android
+    kapt Dependencies.Hilt.androidCompiler
+    implementation Dependencies.Hilt.viewmodel
+    kapt Dependencies.Hilt.viewmodelCompiler
+
+    // Network
+    implementation Dependencies.Retrofit.retrofit
+    implementation Dependencies.Retrofit.serializationConverter
+    implementation Dependencies.okHttp
+
+    // Test
+    testImplementation Dependencies.Test.junit
+    testImplementation Dependencies.Test.mockk
+    testImplementation Dependencies.Test.striktAssertion
+    testImplementation Dependencies.Test.coroutines
+    androidTestImplementation Dependencies.Compose.uiTest
+    androidTestImplementation Dependencies.Compose.uiTestJunit
+    androidTestImplementation Dependencies.Test.junitExt
 }

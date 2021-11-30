@@ -94,17 +94,24 @@ private sealed class MainNavigationItem(
 
 private val MainNavigationItems = listOf(
     MainNavigationItem.ResourceIcon(
-        screen = Screen.Home,
-        labelResId = R.string.home,
-        contentDescriptionResId = R.string.home,
-        iconResId = R.drawable.ic_round_home_24,
-        selectedIconResId = R.drawable.ic_round_home_24,
+        screen = Screen.Movie,
+        labelResId = R.string.movie,
+        contentDescriptionResId = R.string.movie,
+        iconResId = R.drawable.ic_outline_local_movies_24,
+        selectedIconResId = R.drawable.ic_round_local_movies_24,
+    ),
+    MainNavigationItem.ResourceIcon(
+        screen = Screen.Celebrity,
+        labelResId = R.string.celebrity,
+        contentDescriptionResId = R.string.celebrity,
+        iconResId = R.drawable.ic_outline_face_24,
+        selectedIconResId = R.drawable.ic_round_face_24,
     ),
     MainNavigationItem.ResourceIcon(
         screen = Screen.Profile,
         labelResId = R.string.profile,
         contentDescriptionResId = R.string.profile,
-        iconResId = R.drawable.ic_round_person_24,
+        iconResId = R.drawable.ic_round_person_outline_24,
         selectedIconResId = R.drawable.ic_round_person_24,
     ),
 )

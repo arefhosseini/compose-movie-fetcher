@@ -1,6 +1,5 @@
 package com.fearefull.composemoviefetcher.ui
 
-import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.lifecycle.Lifecycle
@@ -38,7 +37,7 @@ class MovieFetcherAppState (
 
     fun navigateToMain(from: NavBackStackEntry) {
         if (from.lifecycleIsResumed()) {
-            navController.navigate(MainScreen.Home.createRoute(Screen.Home))
+            navController.navigate(MainScreen.Movie.createRoute(Screen.Movie))
         }
     }
 
