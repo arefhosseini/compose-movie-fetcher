@@ -7,5 +7,5 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 object ServiceModule {
-
+    // TODO: provide services based on retrofit service class
 }

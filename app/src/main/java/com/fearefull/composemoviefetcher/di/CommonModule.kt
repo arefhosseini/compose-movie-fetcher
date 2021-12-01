@@ -7,5 +7,5 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 object CommonModule {
-
+    // TODO: provide shared preference
 }
