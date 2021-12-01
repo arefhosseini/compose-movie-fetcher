@@ -31,6 +31,15 @@ object NetworkModule {
         return ApiKeyInterceptor(context.getString(R.string.api_key))
     }
 
+    @Provides
+    @Singleton
+    fun provideOkHttpClient(interceptors: Set<Interceptor>): OkHttpClient {
+        return OkHttpClient.Builder()
+            .apply {
+                interceptors().addAll(interceptors)
+            }.build()
+    }
+
     @OptIn(ExperimentalSerializationApi::class)
     @Provides
     @Singleton
