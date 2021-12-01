@@ -44,7 +44,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = JavaVersion.VERSION_11
         useIR = true
     }
 
@@ -107,6 +107,16 @@ dependencies {
     implementation Dependencies.Retrofit.retrofit
     implementation Dependencies.Retrofit.serializationConverter
     implementation Dependencies.okHttp
+
+    // Logging
+    implementation Dependencies.Timber.runtime
+
+    // Database
+    implementation Dependencies.Room.runtime
+    annotationProcessor Dependencies.Room.compiler
+
+    // StartUp
+    implementation Dependencies.StartUp.runtime
 
     // Test
     testImplementation Dependencies.Test.junit

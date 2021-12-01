@@ -74,8 +74,6 @@ object Dependencies {
         const val androidCompiler = "com.google.dagger:hilt-android-compiler:$daggerHiltVersion"
         const val viewmodel = "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
         const val viewmodelCompiler = "androidx.hilt:hilt-compiler:1.0.0"
-
-
     }
 
     object Retrofit {
@@ -90,5 +88,21 @@ object Dependencies {
         const val striktAssertion = "io.strikt:strikt-core:0.32.0"
         const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.2"
         const val junitExt = "androidx.test.ext:junit:1.1.3"
+    }
+
+    object Timber {
+        private const val version = "5.0.1"
+        const val runtime = "com.jakewharton.timber:timber:$version"
+    }
+
+    object Room {
+        private const val version = "2.3.0"
+        const val runtime = "androidx.room:room-runtime:$version"
+        const val compiler = "androidx.room:room-compiler:$version"
+    }
+
+    object StartUp {
+        private const val version = "1.1.0"
+        const val runtime = "androidx.startup:startup-runtime:$version"
     }
 }
