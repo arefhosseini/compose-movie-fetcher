@@ -1,6 +1,8 @@
 # Compose Movie Fetcher
 
 ## Some good links:
+https://github.com/catalinghita8/android-compose-mvvm-foodies
+
 https://github.com/yasinkacmaz/jetflix
 
 https://github.com/keygenqt/android-GitHubViewer
