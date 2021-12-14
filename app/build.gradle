@@ -85,6 +85,7 @@ dependencies {
     implementation Dependencies.Compose.activity
     implementation Dependencies.Compose.viewModel
     implementation Dependencies.Compose.tooling
+    implementation Dependencies.Compose.HiltNavigation.runtime
 
     // Accompanist
     implementation Dependencies.Compose.Accompanist.insets
@@ -104,9 +105,9 @@ dependencies {
     kapt Dependencies.Hilt.viewmodelCompiler
 
     // Network
-    implementation Dependencies.Retrofit.retrofit
-    implementation Dependencies.Retrofit.serializationConverter
-    implementation Dependencies.okHttp
+    implementation Dependencies.Retrofit.runtime
+    implementation Dependencies.Retrofit.gsonConverter
+    implementation Dependencies.Retrofit.interceptor
 
     // Logging
     implementation Dependencies.Timber.runtime
