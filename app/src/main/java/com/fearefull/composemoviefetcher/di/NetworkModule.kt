@@ -2,23 +2,23 @@ package com.fearefull.composemoviefetcher.di
 
 import android.content.Context
 import com.fearefull.composemoviefetcher.R
+import com.fearefull.composemoviefetcher.util.EnumConverterFactory
+import com.fearefull.composemoviefetcher.util.constants.AppConstants.BASE_URL
 import com.fearefull.composemoviefetcher.util.interceptor.ApiKeyInterceptor
-import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoSet
-import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
-import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import timber.log.Timber
 import javax.inject.Singleton
-
-private const val BASE_URL = ""
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -28,26 +28,44 @@ object NetworkModule {
     @Singleton
     @IntoSet
     fun provideApiKeyInterceptor(@ApplicationContext context: Context): Interceptor {
-        return ApiKeyInterceptor(context.getString(R.string.api_key))
+        return ApiKeyInterceptor(context.getString(R.string.api_key_v4))
     }
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(interceptors: Set<Interceptor>): OkHttpClient {
+    fun provideGsonFactory(): GsonConverterFactory {
+        return GsonConverterFactory.create(GsonBuilder().create())
+    }
+
+    @Provides
+    fun provideEnumFactory(): EnumConverterFactory {
+        return EnumConverterFactory()
+    }
+
+    @Provides
+    @Singleton
+    fun provideOkHttpClient(interceptors: @JvmSuppressWildcards Set<Interceptor>): OkHttpClient {
         return OkHttpClient.Builder()
             .apply {
                 interceptors().addAll(interceptors)
+                addInterceptor(HttpLoggingInterceptor { message -> Timber.i(message) }.apply {
+                    level = HttpLoggingInterceptor.Level.BODY
+                })
             }.build()
     }
 
-    @OptIn(ExperimentalSerializationApi::class)
     @Provides
     @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient, json: Json): Retrofit {
+    fun provideRetrofit(
+        okHttpClient: OkHttpClient,
+        gsonFactory: GsonConverterFactory,
+        enumFactory: EnumConverterFactory
+    ): Retrofit {
         return Retrofit.Builder()
             .client(okHttpClient)
             .baseUrl(BASE_URL)
-            .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
+            .addConverterFactory(gsonFactory)
+            .addConverterFactory(enumFactory)
             .build()
     }
 }
