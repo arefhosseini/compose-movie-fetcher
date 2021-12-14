@@ -5,10 +5,13 @@ import okhttp3.Response
 
 class ApiKeyInterceptor(private val apiKey: String) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
-        TODO("Not yet implemented")
+        val request = chain.request().newBuilder().addHeader(AUTHORIZATION, "$AUTHORIZATION_TYPE $apiKey").build()
+
+        return chain.proceed(request)
     }
 
     companion object {
-        private const val API_KEY = "api_key"
+        private const val AUTHORIZATION = "Authorization"
+        private const val AUTHORIZATION_TYPE = "Bearer"
     }
 }
