@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">ComposeMovieFetcher</string>
-    <string name="api_key"></string>
+    <string name="api_key_v4">eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiYzg1NDgzNDc5OTI1ZDBhYjRlODEwNGM1MWRiMDk0ZSIsInN1YiI6IjYxOWM3NDU1OGRlMGFlMDA2MzJmMzE4MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.it-Hyyvz9PdDY92W5dqZjgRg9eZSdVpiMefnDOPRGhA</string>
+    <string name="api_key_v3">bc85483479925d0ab4e8104c51db094e</string>
 
     <string name="movie">Movie</string>
     <string name="celebrity">Celebrity</string>
