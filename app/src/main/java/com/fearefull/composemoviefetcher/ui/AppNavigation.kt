@@ -5,9 +5,11 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.fearefull.composemoviefetcher.ui.auth.Auth
 import com.fearefull.composemoviefetcher.ui.main.celebrity.Celebrity
-import com.fearefull.composemoviefetcher.ui.main.movie.Movie
+import com.fearefull.composemoviefetcher.ui.main.movie.MovieScreen
+import com.fearefull.composemoviefetcher.ui.main.movie.MovieViewModel
 import com.fearefull.composemoviefetcher.ui.main.profile.Profile
 import com.fearefull.composemoviefetcher.ui.splash.Splash
 
@@ -15,14 +17,14 @@ import com.fearefull.composemoviefetcher.ui.splash.Splash
  * Created by Aref Hosseini on ۱۶/۱۱/۲۰۲۱.
  */
 
-sealed class Screen(val route: String) {
-    object Splash : Screen("splash")
-    object Auth : Screen("auth")
+sealed class RouteScreen(val route: String) {
+    object Splash : RouteScreen("splash")
+    object Auth : RouteScreen("auth")
 
     // main tabs
-    object Movie : Screen("movie")
-    object Celebrity : Screen("celebrity")
-    object Profile : Screen("profile")
+    object Movie : RouteScreen("movie")
+    object Celebrity : RouteScreen("celebrity")
+    object Profile : RouteScreen("profile")
 
     companion object {
         fun hasRoute(route: String?): Boolean =
@@ -32,12 +34,12 @@ sealed class Screen(val route: String) {
     }
 }
 
-sealed class MainScreen(val route: String) {
-    object Movie : MainScreen("movie")
-    object Celebrity : MainScreen("celebrity")
-    object Profile : MainScreen("profile")
+sealed class RouteScreenMain(val route: String) {
+    object Movie : RouteScreenMain("movie")
+    object Celebrity : RouteScreenMain("celebrity")
+    object Profile : RouteScreenMain("profile")
 
-    fun createRoute(root: Screen) = "${root.route}/$route"
+    fun createRoute(root: RouteScreen) = "${root.route}/$route"
 }
 
 @Composable
@@ -47,7 +49,7 @@ internal fun AppNavigation(
 ) {
     NavHost(
         navController = appState.navController,
-        startDestination = Screen.Splash.route,
+        startDestination = RouteScreen.Splash.route,
         modifier = modifier
     ) {
         addSplash(appState)
@@ -61,7 +63,7 @@ internal fun AppNavigation(
 private fun NavGraphBuilder.addSplash(
     appState: MovieFetcherAppState,
 ) {
-    composable(route = Screen.Splash.route) {
+    composable(route = RouteScreen.Splash.route) {
         Splash(
             openMain = {
                 appState.navigateToMain(it)
@@ -73,7 +75,7 @@ private fun NavGraphBuilder.addSplash(
 private fun NavGraphBuilder.addAuth(
     appState: MovieFetcherAppState,
 ) {
-    composable(route = Screen.Auth.route) {
+    composable(route = RouteScreen.Auth.route) {
         Auth()
     }
 }
@@ -81,8 +83,8 @@ private fun NavGraphBuilder.addAuth(
 private fun NavGraphBuilder.addMovieTopLevel(
     appState: MovieFetcherAppState) {
     navigation(
-        route = Screen.Movie.route,
-        startDestination = MainScreen.Movie.createRoute(Screen.Movie)
+        route = RouteScreen.Movie.route,
+        startDestination = RouteScreenMain.Movie.createRoute(RouteScreen.Movie)
     ) {
         addMovie(appState)
     }
@@ -91,8 +93,8 @@ private fun NavGraphBuilder.addMovieTopLevel(
 private fun NavGraphBuilder.addCelebrityTopLevel(
     appState: MovieFetcherAppState) {
     navigation(
-        route = Screen.Celebrity.route,
-        startDestination = MainScreen.Celebrity.createRoute(Screen.Celebrity)
+        route = RouteScreen.Celebrity.route,
+        startDestination = RouteScreenMain.Celebrity.createRoute(RouteScreen.Celebrity)
     ) {
         addCelebrity(appState)
     }
@@ -101,8 +103,8 @@ private fun NavGraphBuilder.addCelebrityTopLevel(
 private fun NavGraphBuilder.addProfileTopLevel(
     appState: MovieFetcherAppState) {
     navigation(
-        route = Screen.Profile.route,
-        startDestination = MainScreen.Profile.createRoute(Screen.Profile)
+        route = RouteScreen.Profile.route,
+        startDestination = RouteScreenMain.Profile.createRoute(RouteScreen.Profile)
     ) {
         addProfile(appState)
     }
@@ -111,15 +113,24 @@ private fun NavGraphBuilder.addProfileTopLevel(
 private fun NavGraphBuilder.addMovie(
     appState: MovieFetcherAppState,
 ) {
-    composable(MainScreen.Movie.createRoute(Screen.Movie)) {
-        Movie()
+    composable(RouteScreenMain.Movie.createRoute(RouteScreen.Movie)) {
+        val viewModel: MovieViewModel = hiltViewModel()
+
+        MovieScreen(
+            state = viewModel.viewState.value,
+            effectFlow = viewModel.effect,
+            onEventSent = { event -> viewModel.setEvent(event) },
+            onNavigationSent = { navigationEffect ->
+                // TODO: Navigation
+            }
+        )
     }
 }
 
 private fun NavGraphBuilder.addCelebrity(
     appState: MovieFetcherAppState,
 ) {
-    composable(MainScreen.Celebrity.createRoute(Screen.Celebrity)) {
+    composable(RouteScreenMain.Celebrity.createRoute(RouteScreen.Celebrity)) {
         Celebrity()
     }
 }
@@ -127,7 +138,7 @@ private fun NavGraphBuilder.addCelebrity(
 private fun NavGraphBuilder.addProfile(
     appState: MovieFetcherAppState,
 ) {
-    composable(MainScreen.Profile.createRoute(Screen.Profile)) {
+    composable(RouteScreenMain.Profile.createRoute(RouteScreen.Profile)) {
         Profile()
     }
 }

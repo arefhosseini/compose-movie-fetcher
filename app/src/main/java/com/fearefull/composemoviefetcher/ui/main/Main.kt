@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.fearefull.composemoviefetcher.R
-import com.fearefull.composemoviefetcher.ui.Screen
+import com.fearefull.composemoviefetcher.ui.RouteScreen
 
 /**
  * Created by Aref Hosseini on ۱۷/۱۱/۲۰۲۱.
@@ -19,8 +19,8 @@ import com.fearefull.composemoviefetcher.ui.Screen
 
 @Composable
 internal fun MainBottomNavigation(
-    selectedNavigation: Screen,
-    onNavigationSelected: (Screen) -> Unit,
+    selectedNavigation: RouteScreen,
+    onNavigationSelected: (RouteScreen) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     BottomNavigation(
@@ -33,12 +33,12 @@ internal fun MainBottomNavigation(
                 icon = {
                     MainNavigationItemIcon(
                         item = item,
-                        selected = selectedNavigation == item.screen
+                        selected = selectedNavigation == item.routeScreen
                     )
                 },
                 label = { Text(text = stringResource(item.labelResId)) },
-                selected = selectedNavigation == item.screen,
-                onClick = { onNavigationSelected(item.screen) },
+                selected = selectedNavigation == item.routeScreen,
+                onClick = { onNavigationSelected(item.routeScreen) },
             )
         }
     }
@@ -71,44 +71,44 @@ private fun MainNavigationItemIcon(item: MainNavigationItem, selected: Boolean) 
 }
 
 private sealed class MainNavigationItem(
-    val screen: Screen,
+    val routeScreen: RouteScreen,
     @StringRes val labelResId: Int,
     @StringRes val contentDescriptionResId: Int,
 ) {
     class ResourceIcon(
-        screen: Screen,
+        routeScreen: RouteScreen,
         @StringRes labelResId: Int,
         @StringRes contentDescriptionResId: Int,
         @DrawableRes val iconResId: Int,
         @DrawableRes val selectedIconResId: Int? = null,
-    ) : MainNavigationItem(screen, labelResId, contentDescriptionResId)
+    ) : MainNavigationItem(routeScreen, labelResId, contentDescriptionResId)
 
     class ImageVectorIcon(
-        screen: Screen,
+        routeScreen: RouteScreen,
         @StringRes labelResId: Int,
         @StringRes contentDescriptionResId: Int,
         val iconImageVector: ImageVector,
         val selectedImageVector: ImageVector? = null,
-    ) : MainNavigationItem(screen, labelResId, contentDescriptionResId)
+    ) : MainNavigationItem(routeScreen, labelResId, contentDescriptionResId)
 }
 
 private val MainNavigationItems = listOf(
     MainNavigationItem.ResourceIcon(
-        screen = Screen.Movie,
+        routeScreen = RouteScreen.Movie,
         labelResId = R.string.movie,
         contentDescriptionResId = R.string.movie,
         iconResId = R.drawable.ic_outline_local_movies_24,
         selectedIconResId = R.drawable.ic_round_local_movies_24,
     ),
     MainNavigationItem.ResourceIcon(
-        screen = Screen.Celebrity,
+        routeScreen = RouteScreen.Celebrity,
         labelResId = R.string.celebrity,
         contentDescriptionResId = R.string.celebrity,
         iconResId = R.drawable.ic_outline_face_24,
         selectedIconResId = R.drawable.ic_round_face_24,
     ),
     MainNavigationItem.ResourceIcon(
-        screen = Screen.Profile,
+        routeScreen = RouteScreen.Profile,
         labelResId = R.string.profile,
         contentDescriptionResId = R.string.profile,
         iconResId = R.drawable.ic_round_person_outline_24,

@@ -1,4 +1,4 @@
-package com.fearefull.composemoviefetcher.data
+package com.fearefull.composemoviefetcher.data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

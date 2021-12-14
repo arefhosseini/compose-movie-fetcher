@@ -37,11 +37,11 @@ class MovieFetcherAppState (
 
     fun navigateToMain(from: NavBackStackEntry) {
         if (from.lifecycleIsResumed()) {
-            navController.navigate(MainScreen.Movie.createRoute(Screen.Movie))
+            navController.navigate(RouteScreenMain.Movie.createRoute(RouteScreen.Movie))
         }
     }
 
-    fun onMainBottomNavigationSelected(selected: Screen) {
+    fun onMainBottomNavigationSelected(selected: RouteScreen) {
         if (selected.route != currentRoute) {
             navController.navigate(selected.route) {
                 launchSingleTop = true
@@ -61,7 +61,7 @@ class MovieFetcherAppState (
     // Reading this attribute will cause recompositions when the bottom bar needs shown, or not.
     // Not all routes need to show the bottom bar.
     val shouldShowBottomBar: Boolean
-        @Composable get() = Screen.hasRoute(navController
+        @Composable get() = RouteScreen.hasRoute(navController
             .currentBackStackEntryAsState().value?.destination?.route)
 }
 

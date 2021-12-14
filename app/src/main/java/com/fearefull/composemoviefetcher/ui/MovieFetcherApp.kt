@@ -1,6 +1,5 @@
 package com.fearefull.composemoviefetcher.ui
 
-import android.util.Log
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
@@ -45,20 +44,20 @@ fun MovieFetcherComposeApp(finishActivity: () -> Unit) {
  */
 @Stable
 @Composable
-private fun NavController.currentScreenAsState(): State<Screen> {
-    val selectedItem = remember { mutableStateOf<Screen>(Screen.Movie) }
+private fun NavController.currentScreenAsState(): State<RouteScreen> {
+    val selectedItem = remember { mutableStateOf<RouteScreen>(RouteScreen.Movie) }
 
     DisposableEffect(this) {
         val listener = NavController.OnDestinationChangedListener { _, destination, _ ->
             when {
-                destination.hierarchy.any { it.route == Screen.Movie.route } -> {
-                    selectedItem.value = Screen.Movie
+                destination.hierarchy.any { it.route == RouteScreen.Movie.route } -> {
+                    selectedItem.value = RouteScreen.Movie
                 }
-                destination.hierarchy.any { it.route == Screen.Celebrity.route } -> {
-                    selectedItem.value = Screen.Celebrity
+                destination.hierarchy.any { it.route == RouteScreen.Celebrity.route } -> {
+                    selectedItem.value = RouteScreen.Celebrity
                 }
-                destination.hierarchy.any { it.route == Screen.Profile.route } -> {
-                    selectedItem.value = Screen.Profile
+                destination.hierarchy.any { it.route == RouteScreen.Profile.route } -> {
+                    selectedItem.value = RouteScreen.Profile
                 }
             }
         }
