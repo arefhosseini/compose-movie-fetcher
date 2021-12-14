@@ -1,7 +1,6 @@
 package com.fearefull.composemoviefetcher.buildsrc
 
 object Dependencies {
-    const val okHttp = "com.squareup.okhttp3:okhttp:5.0.0-alpha.2"
     const val ktlint = "com.pinterest:ktlint:0.42.1"
     const val coil = "io.coil-kt:coil-compose:2.0.0-alpha01"
     const val daggerHiltVersion = "2.40.1"
@@ -67,6 +66,11 @@ object Dependencies {
             private const val version = "2.4.0-beta02"
             const val runtime = "androidx.navigation:navigation-compose:$version"
         }
+
+        object HiltNavigation {
+            private const val version = "1.0.0-alpha03"
+            const val runtime = "androidx.hilt:hilt-navigation-compose:$version"
+        }
     }
 
     object Hilt {
@@ -77,9 +81,11 @@ object Dependencies {
     }
 
     object Retrofit {
-        private const val retrofitVersion = "2.9.0"
-        const val retrofit = "com.squareup.retrofit2:retrofit:$retrofitVersion"
-        const val serializationConverter = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
+        private const val version = "2.9.0"
+        const val runtime = "com.squareup.retrofit2:retrofit:$version"
+        const val gsonConverter = "com.squareup.retrofit2:converter-gson:$version"
+
+        const val interceptor = "com.squareup.okhttp3:logging-interceptor:4.9.1"
     }
 
     object Test {
