@@ -1,0 +1,107 @@
+{
+	"info": {
+		"_postman_id": "8303dae5-51de-4ff4-89d1-d81e18a57594",
+		"name": "TMDB",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Trending",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/trending/movie/week",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"trending",
+						"movie",
+						"week"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Genres",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/genre/movie/list",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"genre",
+						"movie",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "People list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/person/popular?page=1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"person",
+						"popular"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiYzg1NDgzNDc5OTI1ZDBhYjRlODEwNGM1MWRiMDk0ZSIsInN1YiI6IjYxOWM3NDU1OGRlMGFlMDA2MzJmMzE4MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.it-Hyyvz9PdDY92W5dqZjgRg9eZSdVpiMefnDOPRGhA",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://api.themoviedb.org/3"
+		}
+	]
+}
