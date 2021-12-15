@@ -1,10 +1,14 @@
 package com.fearefull.composemoviefetcher.data.model.remote
 
-enum class MediaType (
-    val value: String
-) {
-    ALL("all"),
-    MOVIE("movie"),
-    TV("tv"),
-    PERSON("person")
+import com.google.gson.annotations.SerializedName
+
+enum class MediaType {
+    @SerializedName("all")
+    ALL,
+    @SerializedName("movie")
+    MOVIE,
+    @SerializedName("tv")
+    TV,
+    @SerializedName("person")
+    PERSON
 }
