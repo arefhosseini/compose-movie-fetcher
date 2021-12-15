@@ -16,7 +16,6 @@ import coil.compose.rememberImagePainter
 import com.fearefull.composemoviefetcher.R
 import com.fearefull.composemoviefetcher.data.model.other.Trend
 import com.fearefull.composemoviefetcher.util.constants.ThemeConstants
-import timber.log.Timber
 
 @Composable
 fun TrendItem(
