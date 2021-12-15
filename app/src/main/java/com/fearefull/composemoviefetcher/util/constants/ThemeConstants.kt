@@ -10,5 +10,5 @@ object ThemeConstants {
     const val ELEVATION = 4.0
 
     const val TREND_THUMBNAIL_WIDTH = 200
-    const val TREND_THUMBNAIL_ASPECT_RATIO = (16 / 9).toFloat()
+    const val TREND_THUMBNAIL_ASPECT_RATIO = (2.0f / 3.0f)
 }
