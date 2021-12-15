@@ -10,7 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.fearefull.composemoviefetcher.base.LAUNCH_LISTEN_FOR_EFFECTS
 import com.fearefull.composemoviefetcher.data.model.other.Trend
-import com.fearefull.composemoviefetcher.data.model.remote.ResponseTrend
 import com.fearefull.composemoviefetcher.ui.components.TrendItem
 import com.fearefull.composemoviefetcher.util.constants.ThemeConstants
 import kotlinx.coroutines.flow.Flow
