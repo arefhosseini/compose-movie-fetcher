@@ -7,9 +7,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.fearefull.composemoviefetcher.ui.auth.Auth
-import com.fearefull.composemoviefetcher.ui.main.celebrity.Celebrity
-import com.fearefull.composemoviefetcher.ui.main.movie.MovieScreen
-import com.fearefull.composemoviefetcher.ui.main.movie.MovieViewModel
+import com.fearefull.composemoviefetcher.ui.main.celebrities.Celebrity
+import com.fearefull.composemoviefetcher.ui.main.movies.MoviesScreen
+import com.fearefull.composemoviefetcher.ui.main.movies.MoviesViewModel
 import com.fearefull.composemoviefetcher.ui.main.profile.Profile
 import com.fearefull.composemoviefetcher.ui.splash.Splash
 
@@ -114,9 +114,9 @@ private fun NavGraphBuilder.addMovie(
     appState: MovieFetcherAppState,
 ) {
     composable(RouteScreenMain.Movie.createRoute(RouteScreen.Movie)) {
-        val viewModel: MovieViewModel = hiltViewModel()
+        val viewModel: MoviesViewModel = hiltViewModel()
 
-        MovieScreen(
+        MoviesScreen(
             state = viewModel.viewState.value,
             effectFlow = viewModel.effect,
             onEventSent = { event -> viewModel.setEvent(event) },

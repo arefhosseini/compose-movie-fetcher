@@ -28,7 +28,6 @@ fun Splash(
     ) {
         Button(
             onClick = {
-                Log.e("SSSS", "HHH")
                 openMain()
             },
             contentPadding = PaddingValues(
