@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.fearefull.composemoviefetcher.data.model.other.Movie
+import com.fearefull.composemoviefetcher.ui.components.LoadingItem
 import com.fearefull.composemoviefetcher.ui.components.MoviesGridItem
 import com.fearefull.composemoviefetcher.util.constants.ThemeConstants
 
@@ -79,34 +80,15 @@ private fun MoviesGrid(
         }
         pagingItems.apply {
             when {
-                loadState.refresh is
-                        LoadState.Loading -> {
-                    item { LoadingItem() }
+                loadState.refresh is LoadState.Loading -> {
                     item { LoadingItem() }
                 }
-                loadState.append is
-                        LoadState.Loading -> {
-                    item { LoadingItem() }
+                loadState.append is LoadState.Loading -> {
                     item { LoadingItem() }
                 }
-                loadState.refresh is
-                        LoadState.Error -> {}
-                loadState.append is
-                        LoadState.Error -> {}
+                loadState.refresh is LoadState.Error -> {}
+                loadState.append is LoadState.Error -> {}
             }
         }
     }
-}
-
-@Composable
-fun LoadingItem() {
-    CircularProgressIndicator(
-        modifier =
-        Modifier.testTag("ProgressBarItem")
-            .fillMaxWidth()
-            .padding(16.dp)
-            .wrapContentWidth(
-                Alignment.CenterHorizontally
-            )
-    )
 }

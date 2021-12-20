@@ -26,10 +26,9 @@ fun MoviesGridItem(
     Column(
         modifier = Modifier
             .padding(ThemeConstants.HALF_PADDING.dp)
-//            .width(ThemeConstants.MOVIES_GRID_ITEM_THUMBNAIL_WIDTH.dp)
             .clickable { onItemClicked(item) }
     ) {
-        TrendItemThumbnail(item.posterPath, item.title)
+        MoviesGridItemThumbnail(item.posterPath, item.title)
         Spacer(modifier = Modifier.height(ThemeConstants.PADDING.dp))
         Text(item.title)
         Spacer(modifier = Modifier.height(ThemeConstants.HALF_PADDING.dp))
@@ -42,7 +41,7 @@ fun MoviesGridItem(
 }
 
 @Composable
-fun TrendItemThumbnail(
+private fun MoviesGridItemThumbnail(
     url: String?,
     description: String?
 ) {
@@ -55,7 +54,6 @@ fun TrendItemThumbnail(
         painter = painter,
         contentDescription = description,
         modifier = Modifier
-//            .widthIn(ThemeConstants.MOVIES_GRID_ITEM_THUMBNAIL_WIDTH.dp, ThemeConstants.MOVIES_GRID_ITEM_THUMBNAIL_WIDTH.dp)
             .aspectRatio(ThemeConstants.MOVIES_GRID_ITEM_THUMBNAIL_ASPECT_RATIO, true)
             .clip(RoundedCornerShape(ThemeConstants.ROUNDED_CORNER.dp))
         ,

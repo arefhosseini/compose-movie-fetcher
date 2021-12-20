@@ -14,11 +14,11 @@ class MoviesPagingSource (
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
         return try {
             val page = params.key ?: 1
-            val responseMovie = repositoryMovie.fetchMovies(page)
+            val responseList = repositoryMovie.fetchMovies(page)
             val loadResult = LoadResult.Page(
-                data = responseMovie.toMovies(),
-                prevKey = if (page == 1) null else page - 1,
-                nextKey = responseMovie.page.plus(1)
+                data = responseList.toMovies(),
+                prevKey = if (page == 1) null else page.minus(1),
+                nextKey = responseList.page.plus(1)
             )
             onDataWasLoaded()
             loadResult
@@ -27,10 +27,5 @@ class MoviesPagingSource (
         }
     }
 
-    override fun getRefreshKey(state: PagingState<Int, Movie>): Int? {
-        return state.anchorPosition?.let {
-            state.closestPageToPosition(it)?.prevKey?.plus(1)
-                ?: state.closestPageToPosition(it)?.nextKey?.minus(1)
-        }
-    }
+    override fun getRefreshKey(state: PagingState<Int, Movie>): Int = 1
 }

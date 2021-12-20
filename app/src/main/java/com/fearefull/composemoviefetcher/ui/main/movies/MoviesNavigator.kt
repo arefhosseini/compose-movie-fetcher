@@ -14,8 +14,6 @@ class MoviesNavigator {
 
     data class State(
         val movies: Flow<PagingData<Movie>>? = null,
-        val loading: Boolean = false,
-        val error: Throwable? = null,
     ) : ViewState
 
     sealed class Effect : ViewSideEffect {

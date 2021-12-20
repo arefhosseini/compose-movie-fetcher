@@ -8,27 +8,19 @@ import androidx.paging.cachedIn
 import com.fearefull.composemoviefetcher.base.BaseViewModel
 import com.fearefull.composemoviefetcher.data.model.other.Movie
 import com.fearefull.composemoviefetcher.data.remote.RepositoryMovie
+import com.fearefull.composemoviefetcher.util.constants.AppConstants
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class MoviesViewModel @Inject constructor(
     private val repositoryMovie: RepositoryMovie,
 ) : BaseViewModel<MoviesNavigator.Event, MoviesNavigator.State, MoviesNavigator.Effect>() {
-//    val movies: Flow<PagingData<Movie>> = Pager(
-//        config = PagingConfig(pageSize = 20),
-//        pagingSourceFactory = ::initPagingSource)
-//        .flow.cachedIn(viewModelScope)
-
-//    lateinit var pagingSource: MoviesPagingSource
-//        private set
 
     init {
         val movies: Flow<PagingData<Movie>> = Pager(
-            config = PagingConfig(pageSize = 20),
+            config = PagingConfig(pageSize = AppConstants.MOVIES_PAGING_PAGE_SIZE),
             ) {
             MoviesPagingSource(
                 repositoryMovie,
@@ -41,8 +33,7 @@ class MoviesViewModel @Inject constructor(
         }
     }
 
-    override fun setInitialState() =
-        MoviesNavigator.State(loading = true)
+    override fun setInitialState() = MoviesNavigator.State()
 
     override fun handleEvents(event: MoviesNavigator.Event) {
         when(event) {
