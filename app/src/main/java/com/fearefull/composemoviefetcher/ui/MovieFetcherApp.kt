@@ -10,6 +10,7 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import com.fearefull.composemoviefetcher.ui.main.MainBottomNavigation
 import com.fearefull.composemoviefetcher.ui.theme.ComposeMovieFetcherTheme
 import com.google.accompanist.insets.ProvideWindowInsets
+import timber.log.Timber
 
 /**
  * Created by Aref Hosseini on ۱۶/۱۱/۲۰۲۱.

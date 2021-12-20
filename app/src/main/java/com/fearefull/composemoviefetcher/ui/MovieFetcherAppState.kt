@@ -8,6 +8,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import timber.log.Timber
 
 /**
  * Created by Aref Hosseini on ۲۰/۱۱/۲۰۲۱.
@@ -38,6 +39,18 @@ class MovieFetcherAppState (
     fun navigateToMain(from: NavBackStackEntry) {
         if (from.lifecycleIsResumed()) {
             navController.navigate(RouteScreenMain.Movie.createRoute(RouteScreen.Movie))
+        }
+    }
+
+    fun navigateToMovieDetails(from: NavBackStackEntry, root: RouteScreen, movieId: Long) {
+        if (from.lifecycleIsResumed()) {
+            navController.navigate(RouteScreenMain.MovieDetails.createRoute(root, movieId))
+        }
+    }
+
+    fun navigateToCelebrityDetails(from: NavBackStackEntry, root: RouteScreen, celebrityId: Long) {
+        if (from.lifecycleIsResumed()) {
+            navController.navigate(RouteScreenMain.CelebrityDetails.createRoute(root, celebrityId))
         }
     }
 

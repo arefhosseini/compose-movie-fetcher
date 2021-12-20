@@ -7,12 +7,19 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.fearefull.composemoviefetcher.ui.auth.Auth
+import com.fearefull.composemoviefetcher.ui.main.celebrities.CelebritiesNavigator
 import com.fearefull.composemoviefetcher.ui.main.celebrities.CelebritiesScreen
 import com.fearefull.composemoviefetcher.ui.main.celebrities.CelebritiesViewModel
+import com.fearefull.composemoviefetcher.ui.main.celebrity_details.CelebrityDetailsScreen
+import com.fearefull.composemoviefetcher.ui.main.celebrity_details.CelebrityDetailsViewModel
+import com.fearefull.composemoviefetcher.ui.main.movie_details.MovieDetailsScreen
+import com.fearefull.composemoviefetcher.ui.main.movie_details.MovieDetailsViewModel
+import com.fearefull.composemoviefetcher.ui.main.movies.MoviesNavigator
 import com.fearefull.composemoviefetcher.ui.main.movies.MoviesScreen
 import com.fearefull.composemoviefetcher.ui.main.movies.MoviesViewModel
 import com.fearefull.composemoviefetcher.ui.main.profile.Profile
 import com.fearefull.composemoviefetcher.ui.splash.Splash
+import timber.log.Timber
 
 /**
  * Created by Aref Hosseini on ۱۶/۱۱/۲۰۲۱.
@@ -36,11 +43,23 @@ sealed class RouteScreen(val route: String) {
 }
 
 sealed class RouteScreenMain(val route: String) {
+    fun createRoute(root: RouteScreen) = "${root.route}/$route"
+
     object Movie : RouteScreenMain("movie")
     object Celebrity : RouteScreenMain("celebrity")
     object Profile : RouteScreenMain("profile")
 
-    fun createRoute(root: RouteScreen) = "${root.route}/$route"
+    object MovieDetails : RouteScreenMain("movieDetails/{movieId}") {
+        fun createRoute(root: RouteScreen, movieId: Long): String {
+            return "${root.route}/movieDetails/$movieId"
+        }
+    }
+    
+    object CelebrityDetails : RouteScreenMain("celebrityDetails/{celebrityId}") {
+        fun createRoute(root: RouteScreen, celebrityId: Long): String {
+            return "${root.route}/celebrityDetails/$celebrityId"
+        }
+    }
 }
 
 @Composable
@@ -66,9 +85,7 @@ private fun NavGraphBuilder.addSplash(
 ) {
     composable(route = RouteScreen.Splash.route) {
         Splash(
-            openMain = {
-                appState.navigateToMain(it)
-            }
+            openMain = { appState.navigateToMain(it) }
         )
     }
 }
@@ -87,7 +104,8 @@ private fun NavGraphBuilder.addMovieTopLevel(
         route = RouteScreen.Movie.route,
         startDestination = RouteScreenMain.Movie.createRoute(RouteScreen.Movie)
     ) {
-        addMovie(appState)
+        addMovie(appState, RouteScreen.Movie)
+        addMovieDetails(appState, RouteScreen.Movie)
     }
 }
 
@@ -97,7 +115,8 @@ private fun NavGraphBuilder.addCelebrityTopLevel(
         route = RouteScreen.Celebrity.route,
         startDestination = RouteScreenMain.Celebrity.createRoute(RouteScreen.Celebrity)
     ) {
-        addCelebrity(appState)
+        addCelebrity(appState, RouteScreen.Celebrity)
+        addCelebrityDetails(appState, RouteScreen.Celebrity)
     }
 }
 
@@ -107,14 +126,15 @@ private fun NavGraphBuilder.addProfileTopLevel(
         route = RouteScreen.Profile.route,
         startDestination = RouteScreenMain.Profile.createRoute(RouteScreen.Profile)
     ) {
-        addProfile(appState)
+        addProfile(appState, RouteScreen.Profile)
     }
 }
 
 private fun NavGraphBuilder.addMovie(
     appState: MovieFetcherAppState,
+    root: RouteScreen
 ) {
-    composable(RouteScreenMain.Movie.createRoute(RouteScreen.Movie)) {
+    composable(RouteScreenMain.Movie.createRoute(root)) {
         val viewModel: MoviesViewModel = hiltViewModel()
 
         MoviesScreen(
@@ -122,7 +142,11 @@ private fun NavGraphBuilder.addMovie(
             effectFlow = viewModel.effect,
             onEventSent = { event -> viewModel.setEvent(event) },
             onNavigationSent = { navigationEffect ->
-                // TODO: Navigation
+                when(navigationEffect) {
+                    is MoviesNavigator.Effect.Navigation.ToMovieDetails -> {
+                        appState.navigateToMovieDetails(it, root, navigationEffect.movie.id)
+                    }
+                }
             }
         )
     }
@@ -130,11 +154,47 @@ private fun NavGraphBuilder.addMovie(
 
 private fun NavGraphBuilder.addCelebrity(
     appState: MovieFetcherAppState,
+    root: RouteScreen
 ) {
-    composable(RouteScreenMain.Celebrity.createRoute(RouteScreen.Celebrity)) {
+    composable(RouteScreenMain.Celebrity.createRoute(root)) {
         val viewModel: CelebritiesViewModel = hiltViewModel()
 
         CelebritiesScreen(
+            state = viewModel.viewState.value,
+            effectFlow = viewModel.effect,
+            onEventSent = { event -> viewModel.setEvent(event) },
+            onNavigationSent = { navigationEffect ->
+                when(navigationEffect) {
+                    is CelebritiesNavigator.Effect.Navigation.ToCelebrityDetails -> {
+                        appState.navigateToCelebrityDetails(it, root, navigationEffect.celebrity.id)
+                    }
+                }
+            }
+        )
+    }
+}
+
+private fun NavGraphBuilder.addProfile(
+    appState: MovieFetcherAppState,
+    root: RouteScreen
+) {
+    composable(RouteScreenMain.Profile.createRoute(root)) {
+        Profile()
+    }
+}
+
+private fun NavGraphBuilder.addMovieDetails(
+    appState: MovieFetcherAppState,
+    root: RouteScreen
+) {
+    composable(
+        RouteScreenMain.MovieDetails.createRoute(root),
+        arguments = listOf(
+            navArgument("movieId") { type = NavType.LongType }
+        )
+    ) {
+        val viewModel: MovieDetailsViewModel = hiltViewModel()
+        MovieDetailsScreen(
             state = viewModel.viewState.value,
             effectFlow = viewModel.effect,
             onEventSent = { event -> viewModel.setEvent(event) },
@@ -145,10 +205,24 @@ private fun NavGraphBuilder.addCelebrity(
     }
 }
 
-private fun NavGraphBuilder.addProfile(
+private fun NavGraphBuilder.addCelebrityDetails(
     appState: MovieFetcherAppState,
+    root: RouteScreen
 ) {
-    composable(RouteScreenMain.Profile.createRoute(RouteScreen.Profile)) {
-        Profile()
+    composable(
+        RouteScreenMain.CelebrityDetails.createRoute(root),
+        arguments = listOf(
+            navArgument("celebrityId") { type = NavType.LongType }
+        )
+    ) {
+        val viewModel: CelebrityDetailsViewModel = hiltViewModel()
+        CelebrityDetailsScreen(
+            state = viewModel.viewState.value, 
+            effectFlow = viewModel.effect, 
+            onEventSent = { event -> viewModel.setEvent(event) }, 
+            onNavigationSent = { navigationEffect ->
+                // TODO: NAv 
+            }
+        )
     }
 }
