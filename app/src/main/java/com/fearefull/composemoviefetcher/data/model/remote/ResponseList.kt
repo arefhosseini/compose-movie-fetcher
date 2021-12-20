@@ -1,6 +1,7 @@
 package com.fearefull.composemoviefetcher.data.model.remote
 
 import androidx.compose.runtime.Immutable
+import com.fearefull.composemoviefetcher.data.model.other.Celebrity
 import com.fearefull.composemoviefetcher.data.model.other.Movie
 
 @Immutable
@@ -13,4 +14,8 @@ class ResponseList<T> (
 
 fun ResponseList<ResponseMovie>.toMovies(): List<Movie> {
     return results.map { it.toMovie() }
+}
+
+fun ResponseList<ResponseCelebrity>.toCelebrities(): List<Celebrity> {
+    return results.map { it.toCelebrity() }
 }
