@@ -10,6 +10,7 @@ object ThemeConstants {
     const val ELEVATION = 4.0
 
     const val MOVIES_GRID_ITEM_CELL_COUNT = 3
-    const val MOVIES_GRID_ITEM_THUMBNAIL_WIDTH = 200
     const val MOVIES_GRID_ITEM_THUMBNAIL_ASPECT_RATIO = (2.0f / 3.0f)
+
+    const val CELEBRITIES_GRID_ITEM_CELL_COUNT = 4
 }

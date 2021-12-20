@@ -7,7 +7,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.fearefull.composemoviefetcher.ui.auth.Auth
-import com.fearefull.composemoviefetcher.ui.main.celebrities.Celebrity
+import com.fearefull.composemoviefetcher.ui.main.celebrities.CelebritiesScreen
+import com.fearefull.composemoviefetcher.ui.main.celebrities.CelebritiesViewModel
 import com.fearefull.composemoviefetcher.ui.main.movies.MoviesScreen
 import com.fearefull.composemoviefetcher.ui.main.movies.MoviesViewModel
 import com.fearefull.composemoviefetcher.ui.main.profile.Profile
@@ -131,7 +132,16 @@ private fun NavGraphBuilder.addCelebrity(
     appState: MovieFetcherAppState,
 ) {
     composable(RouteScreenMain.Celebrity.createRoute(RouteScreen.Celebrity)) {
-        Celebrity()
+        val viewModel: CelebritiesViewModel = hiltViewModel()
+
+        CelebritiesScreen(
+            state = viewModel.viewState.value,
+            effectFlow = viewModel.effect,
+            onEventSent = { event -> viewModel.setEvent(event) },
+            onNavigationSent = { navigationEffect ->
+                // TODO: Navigation
+            }
+        )
     }
 }
 
