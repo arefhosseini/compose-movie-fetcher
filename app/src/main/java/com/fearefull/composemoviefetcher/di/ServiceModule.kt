@@ -1,6 +1,6 @@
 package com.fearefull.composemoviefetcher.di
 
-import com.fearefull.composemoviefetcher.data.remote.ServiceTrend
+import com.fearefull.composemoviefetcher.data.remote.ServiceMovie
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,7 +14,7 @@ object ServiceModule {
 
     @Provides
     @Singleton
-    fun provideServiceTrend(retrofit: Retrofit): ServiceTrend {
-        return retrofit.create(ServiceTrend::class.java)
+    fun provideServiceMovie(retrofit: Retrofit): ServiceMovie {
+        return retrofit.create(ServiceMovie::class.java)
     }
 }

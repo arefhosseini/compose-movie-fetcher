@@ -1,7 +1,7 @@
 package com.fearefull.composemoviefetcher.di
 
-import com.fearefull.composemoviefetcher.data.remote.RepositoryTrend
-import com.fearefull.composemoviefetcher.data.remote.ServiceTrend
+import com.fearefull.composemoviefetcher.data.remote.RepositoryMovie
+import com.fearefull.composemoviefetcher.data.remote.ServiceMovie
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,9 +14,9 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideRepositoryTrend(
-        service: ServiceTrend
-    ): RepositoryTrend {
-        return RepositoryTrend(service)
+    fun provideRepositoryMovie(
+        service: ServiceMovie
+    ): RepositoryMovie {
+        return RepositoryMovie(service)
     }
 }
