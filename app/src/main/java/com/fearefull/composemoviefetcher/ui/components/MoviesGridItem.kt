@@ -15,18 +15,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.fearefull.composemoviefetcher.R
-import com.fearefull.composemoviefetcher.data.model.other.Trend
+import com.fearefull.composemoviefetcher.data.model.other.Movie
 import com.fearefull.composemoviefetcher.util.constants.ThemeConstants
 
 @Composable
-fun TrendItem(
-    item: Trend,
-    onItemClicked: (item: Trend) -> Unit = {}
+fun MoviesGridItem(
+    item: Movie,
+    onItemClicked: (item: Movie) -> Unit = {}
 ) {
     Column(
         modifier = Modifier
             .padding(ThemeConstants.HALF_PADDING.dp)
-            .width(ThemeConstants.TREND_THUMBNAIL_WIDTH.dp)
+//            .width(ThemeConstants.MOVIES_GRID_ITEM_THUMBNAIL_WIDTH.dp)
             .clickable { onItemClicked(item) }
     ) {
         TrendItemThumbnail(item.posterPath, item.title)
@@ -55,8 +55,8 @@ fun TrendItemThumbnail(
         painter = painter,
         contentDescription = description,
         modifier = Modifier
-            .widthIn(ThemeConstants.TREND_THUMBNAIL_WIDTH.dp, ThemeConstants.TREND_THUMBNAIL_WIDTH.dp)
-            .aspectRatio(ThemeConstants.TREND_THUMBNAIL_ASPECT_RATIO, true)
+//            .widthIn(ThemeConstants.MOVIES_GRID_ITEM_THUMBNAIL_WIDTH.dp, ThemeConstants.MOVIES_GRID_ITEM_THUMBNAIL_WIDTH.dp)
+            .aspectRatio(ThemeConstants.MOVIES_GRID_ITEM_THUMBNAIL_ASPECT_RATIO, true)
             .clip(RoundedCornerShape(ThemeConstants.ROUNDED_CORNER.dp))
         ,
         contentScale = ContentScale.Crop
