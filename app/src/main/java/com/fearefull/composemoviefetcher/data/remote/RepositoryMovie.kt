@@ -3,10 +3,7 @@ package com.fearefull.composemoviefetcher.data.remote
 import android.content.res.Resources
 import androidx.annotation.WorkerThread
 import com.fearefull.composemoviefetcher.data.model.other.Movie
-import com.fearefull.composemoviefetcher.data.model.remote.ResponseList
-import com.fearefull.composemoviefetcher.data.model.remote.ResponseMovie
-import com.fearefull.composemoviefetcher.data.model.remote.SortType
-import com.fearefull.composemoviefetcher.data.model.remote.toMovies
+import com.fearefull.composemoviefetcher.data.model.remote.*
 import javax.inject.Inject
 
 class RepositoryMovie @Inject constructor(
@@ -23,5 +20,13 @@ class RepositoryMovie @Inject constructor(
             sortType = sortType,
             includeAdult = includeAdult
         ).body() ?: throw Resources.NotFoundException()
+    }
+
+    @WorkerThread
+    suspend fun fetchMovieDetails(
+        movieId: Long
+    ): Movie {
+        return service.fetchMovieDetails(movieId)
+            .body()?.toMovie() ?: throw Resources.NotFoundException()
     }
 }
