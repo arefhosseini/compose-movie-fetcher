@@ -7,6 +7,7 @@ plugins {
     id 'kotlin-kapt'
     id 'kotlinx-serialization'
     id 'dagger.hilt.android.plugin'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -118,6 +119,9 @@ dependencies {
 
     // StartUp
     implementation Dependencies.StartUp.runtime
+
+    // Firebase
+    implementation Dependencies.Firebase.auth
 
     // Test
     testImplementation Dependencies.Test.junit

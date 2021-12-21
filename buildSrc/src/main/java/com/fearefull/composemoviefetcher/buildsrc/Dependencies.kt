@@ -16,6 +16,7 @@ object Dependencies {
         const val hiltPlugin = "com.google.dagger:hilt-android-gradle-plugin:$daggerHiltVersion"
         const val kotlinPlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Kotlin.version}"
         const val kotlinSerializationPlugin = "org.jetbrains.kotlin:kotlin-serialization:${Kotlin.version}"
+        const val firebasePlugin = "com.google.gms:google-services:4.3.10"
 
         object VersionsPlugin {
             const val id = "com.github.ben-manes.versions"
@@ -110,5 +111,10 @@ object Dependencies {
     object StartUp {
         private const val version = "1.1.0"
         const val runtime = "androidx.startup:startup-runtime:$version"
+    }
+
+    object Firebase {
+        private const val version = "21.0.1"
+        const val auth = "com.google.firebase:firebase-auth:$version"
     }
 }

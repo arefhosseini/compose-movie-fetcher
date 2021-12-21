@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "155601869879",
+    "project_id": "compose-movie-fetcher",
+    "storage_bucket": "compose-movie-fetcher.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:155601869879:android:0d7fc2694b1816325a33b2",
+        "android_client_info": {
+          "package_name": "com.fearefull.composemoviefetcher"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "155601869879-frsq2lk543flep7gqfr6166idnh9f6la.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-LS7pN2-3_rorC0B81TOBqc9tZ65tfeo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "155601869879-frsq2lk543flep7gqfr6166idnh9f6la.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
