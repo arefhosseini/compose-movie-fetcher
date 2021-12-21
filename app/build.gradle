@@ -121,6 +121,7 @@ dependencies {
     implementation Dependencies.StartUp.runtime
 
     // Firebase
+    implementation Dependencies.Firebase.coroutines
     implementation Dependencies.Firebase.auth
 
     // Test

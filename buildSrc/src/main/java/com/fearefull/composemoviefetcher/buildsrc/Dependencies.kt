@@ -116,5 +116,6 @@ object Dependencies {
     object Firebase {
         private const val version = "21.0.1"
         const val auth = "com.google.firebase:firebase-auth:$version"
+        const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.5.2"
     }
 }
