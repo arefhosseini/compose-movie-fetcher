@@ -42,6 +42,18 @@ class MovieFetcherAppState (
         }
     }
 
+    fun navigateToSignUp(from: NavBackStackEntry) {
+        if (from.lifecycleIsResumed()) {
+            navController.navigate(RouteScreen.SignUp.route)
+        }
+    }
+
+    fun navigateToSignIn(from: NavBackStackEntry) {
+        if (from.lifecycleIsResumed()) {
+            navController.navigate(RouteScreen.SignIn.route)
+        }
+    }
+
     fun navigateToMovieDetails(from: NavBackStackEntry, root: RouteScreen, movieId: Long) {
         if (from.lifecycleIsResumed()) {
             navController.navigate(RouteScreenMain.MovieDetails.createRoute(root, movieId))

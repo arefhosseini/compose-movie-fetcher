@@ -6,7 +6,12 @@ import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.fearefull.composemoviefetcher.ui.auth.Auth
+import com.fearefull.composemoviefetcher.ui.auth.sign_in.SignInNavigator
+import com.fearefull.composemoviefetcher.ui.auth.sign_in.SignInScreen
+import com.fearefull.composemoviefetcher.ui.auth.sign_in.SignInViewModel
+import com.fearefull.composemoviefetcher.ui.auth.sign_up.SignUpNavigator
+import com.fearefull.composemoviefetcher.ui.auth.sign_up.SignUpScreen
+import com.fearefull.composemoviefetcher.ui.auth.sign_up.SignUpViewModel
 import com.fearefull.composemoviefetcher.ui.main.celebrities.CelebritiesNavigator
 import com.fearefull.composemoviefetcher.ui.main.celebrities.CelebritiesScreen
 import com.fearefull.composemoviefetcher.ui.main.celebrities.CelebritiesViewModel
@@ -18,8 +23,9 @@ import com.fearefull.composemoviefetcher.ui.main.movies.MoviesNavigator
 import com.fearefull.composemoviefetcher.ui.main.movies.MoviesScreen
 import com.fearefull.composemoviefetcher.ui.main.movies.MoviesViewModel
 import com.fearefull.composemoviefetcher.ui.main.profile.Profile
-import com.fearefull.composemoviefetcher.ui.splash.Splash
-import timber.log.Timber
+import com.fearefull.composemoviefetcher.ui.splash.SplashNavigator
+import com.fearefull.composemoviefetcher.ui.splash.SplashScreen
+import com.fearefull.composemoviefetcher.ui.splash.SplashViewModel
 
 /**
  * Created by Aref Hosseini on ۱۶/۱۱/۲۰۲۱.
@@ -27,7 +33,8 @@ import timber.log.Timber
 
 sealed class RouteScreen(val route: String) {
     object Splash : RouteScreen("splash")
-    object Auth : RouteScreen("auth")
+    object SignUp : RouteScreen("signUp")
+    object SignIn : RouteScreen("signIn")
 
     // main tabs
     object Movie : RouteScreen("movie")
@@ -38,7 +45,7 @@ sealed class RouteScreen(val route: String) {
         fun hasRoute(route: String?): Boolean =
             route?.let {
                 route.contains(Movie.route) || route.contains(Celebrity.route) || route.contains(Profile.route)
-            } ?: kotlin.run { false }
+            } ?: run { false }
     }
 }
 
@@ -73,7 +80,8 @@ internal fun AppNavigation(
         modifier = modifier
     ) {
         addSplash(appState)
-        addAuth(appState)
+        addSignUp(appState)
+        addSignIn(appState)
         addMovieTopLevel(appState)
         addCelebrityTopLevel(appState)
         addProfileTopLevel(appState)
@@ -84,17 +92,68 @@ private fun NavGraphBuilder.addSplash(
     appState: MovieFetcherAppState,
 ) {
     composable(route = RouteScreen.Splash.route) {
-        Splash(
-            openMain = { appState.navigateToMain(it) }
+        val viewModel: SplashViewModel = hiltViewModel()
+
+        SplashScreen(
+            state = viewModel.viewState.value,
+            effectFlow = viewModel.effect,
+            onEventSent = { event -> viewModel.setEvent(event) },
+            onNavigationSent = { navigationEffect ->
+                when(navigationEffect) {
+                    is SplashNavigator.Effect.Navigation.ToMain -> {
+                        appState.navigateToMain(it)
+                    }
+                    is SplashNavigator.Effect.Navigation.ToAuth -> {
+                        appState.navigateToSignIn(it)
+                    }
+                }
+            }
+        )
+
+    }
+}
+
+private fun NavGraphBuilder.addSignUp(
+    appState: MovieFetcherAppState,
+) {
+    composable(route = RouteScreen.SignUp.route) {
+        val viewModel: SignUpViewModel = hiltViewModel()
+
+        SignUpScreen(
+            state = viewModel.viewState.value,
+            effectFlow = viewModel.effect,
+            onEventSent = { event -> viewModel.setEvent(event) },
+            onNavigationSent = { navigationEffect ->
+                when(navigationEffect) {
+                    is SignUpNavigator.Effect.Navigation.ToMain ->
+                        appState.navigateToMain(it)
+                    is SignUpNavigator.Effect.Navigation.ToSignIn ->
+                        appState.navigateToSignIn(it)
+                }
+            }
         )
     }
 }
 
-private fun NavGraphBuilder.addAuth(
+private fun NavGraphBuilder.addSignIn(
     appState: MovieFetcherAppState,
 ) {
-    composable(route = RouteScreen.Auth.route) {
-        Auth()
+    composable(route = RouteScreen.SignIn.route) {
+        val viewModel: SignInViewModel = hiltViewModel()
+
+        SignInScreen(
+            state = viewModel.viewState.value,
+            effectFlow = viewModel.effect,
+            onEventSent = { event -> viewModel.setEvent(event) },
+            onNavigationSent = { navigationEffect ->
+                when(navigationEffect) {
+                    is SignInNavigator.Effect.Navigation.ToMain ->
+                        appState.navigateToMain(it)
+                    is SignInNavigator.Effect.Navigation.ToSignUp ->
+                        appState.navigateToSignUp(it)
+                }
+            }
+        )
     }
 }
 
