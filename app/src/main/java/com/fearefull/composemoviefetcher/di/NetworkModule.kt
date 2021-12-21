@@ -5,6 +5,7 @@ import com.fearefull.composemoviefetcher.R
 import com.fearefull.composemoviefetcher.util.EnumConverterFactory
 import com.fearefull.composemoviefetcher.util.constants.AppConstants.BASE_URL
 import com.fearefull.composemoviefetcher.util.interceptor.ApiKeyInterceptor
+import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
@@ -67,5 +68,11 @@ object NetworkModule {
             .addConverterFactory(gsonFactory)
             .addConverterFactory(enumFactory)
             .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideFirebaseAuth(): FirebaseAuth {
+        return FirebaseAuth.getInstance()
     }
 }
