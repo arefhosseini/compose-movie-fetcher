@@ -39,7 +39,7 @@ fun CelebrityDetailsScreen(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text("MOVIE DETAILS")
+                Text("Loading")
             }
         }
         state.celebrity != null -> {

@@ -1,4 +1,4 @@
-package com.fearefull.composemoviefetcher.ui.main.movie_details
+package com.fearefull.composemoviefetcher.ui.splash
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,24 +14,27 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 
-@Composable
-fun MovieDetailsScreen(
-    state: MovieDetailsNavigator.State,
-    effectFlow: Flow<MovieDetailsNavigator.Effect>?,
-    onEventSent: (event: MovieDetailsNavigator.Event) -> Unit,
-    onNavigationSent: (navigationEffect: MovieDetailsNavigator.Effect.Navigation) -> Unit,
-) {
+/**
+ * Created by Aref Hosseini on ۱۷/۱۱/۲۰۲۱.
+ */
 
+@Composable
+fun SplashScreen(
+    state: SplashNavigator.State,
+    effectFlow: Flow<SplashNavigator.Effect>?,
+    onEventSent: (event: SplashNavigator.Event) -> Unit,
+    onNavigationSent: (navigationEffect: SplashNavigator.Effect.Navigation) -> Unit,
+) {
     LaunchedEffect(LAUNCH_LISTEN_FOR_EFFECTS) {
         effectFlow?.onEach { effect ->
             when(effect) {
-                is MovieDetailsNavigator.Effect.DataWasLoaded -> {
-
-                }
+                is SplashNavigator.Effect.Navigation.ToAuth ->
+                    onNavigationSent(effect)
+                is SplashNavigator.Effect.Navigation.ToMain ->
+                    onNavigationSent(effect)
             }
         }?.collect()
     }
-
     when {
         state.loading -> {
             Column(
@@ -39,16 +42,16 @@ fun MovieDetailsScreen(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text("Loading")
+                Text("Loading splash")
             }
         }
-        state.movie != null -> {
+        else -> {
             Column(
                 modifier = Modifier.fillMaxWidth().fillMaxHeight(),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(state.movie.title)
+                Text("Error")
             }
         }
     }
