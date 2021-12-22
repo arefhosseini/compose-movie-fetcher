@@ -9,6 +9,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import timber.log.Timber
+import java.util.*
 
 /**
  * Created by Aref Hosseini on ۲۰/۱۱/۲۰۲۱.
@@ -48,9 +49,12 @@ class MovieFetcherAppState (
         }
     }
 
-    fun navigateToSignIn(from: NavBackStackEntry) {
+    fun navigateToSignIn(from: NavBackStackEntry, clearStack: Boolean = false) {
         if (from.lifecycleIsResumed()) {
-            navController.navigate(RouteScreen.SignIn.route)
+            navController.navigate(RouteScreen.SignIn.route) {
+//                if (clearStack)
+//                    popUpTo(0)
+            }
         }
     }
 

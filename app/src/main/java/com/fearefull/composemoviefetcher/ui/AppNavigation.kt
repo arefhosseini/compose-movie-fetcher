@@ -22,7 +22,9 @@ import com.fearefull.composemoviefetcher.ui.main.movie_details.MovieDetailsViewM
 import com.fearefull.composemoviefetcher.ui.main.movies.MoviesNavigator
 import com.fearefull.composemoviefetcher.ui.main.movies.MoviesScreen
 import com.fearefull.composemoviefetcher.ui.main.movies.MoviesViewModel
-import com.fearefull.composemoviefetcher.ui.main.profile.Profile
+import com.fearefull.composemoviefetcher.ui.main.profile.ProfileNavigator
+import com.fearefull.composemoviefetcher.ui.main.profile.ProfileScreen
+import com.fearefull.composemoviefetcher.ui.main.profile.ProfileViewModel
 import com.fearefull.composemoviefetcher.ui.splash.SplashNavigator
 import com.fearefull.composemoviefetcher.ui.splash.SplashScreen
 import com.fearefull.composemoviefetcher.ui.splash.SplashViewModel
@@ -46,6 +48,8 @@ sealed class RouteScreen(val route: String) {
             route?.let {
                 route.contains(Movie.route) || route.contains(Celebrity.route) || route.contains(Profile.route)
             } ?: run { false }
+
+        val DEFAULT_TAB = Movie
     }
 }
 
@@ -104,7 +108,7 @@ private fun NavGraphBuilder.addSplash(
                         appState.navigateToMain(it)
                     }
                     is SplashNavigator.Effect.Navigation.ToAuth -> {
-                        appState.navigateToSignIn(it)
+                        appState.navigateToSignIn(it, clearStack = true)
                     }
                 }
             }
@@ -238,7 +242,19 @@ private fun NavGraphBuilder.addProfile(
     root: RouteScreen
 ) {
     composable(RouteScreenMain.Profile.createRoute(root)) {
-        Profile()
+        val viewModel: ProfileViewModel = hiltViewModel()
+        ProfileScreen(
+            state = viewModel.viewState.value,
+            effectFlow = viewModel.effect,
+            onEventSent = { event -> viewModel.setEvent(event) },
+            onNavigationSent = { navigationEffect ->
+                when(navigationEffect) {
+                    is ProfileNavigator.Effect.Navigation.ToAuth -> {
+                        appState.navigateToSignIn(it, clearStack = true)
+                    }
+                }
+            }
+        )
     }
 }
 

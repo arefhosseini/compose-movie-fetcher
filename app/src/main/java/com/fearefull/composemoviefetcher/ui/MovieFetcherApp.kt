@@ -46,7 +46,7 @@ fun MovieFetcherComposeApp(finishActivity: () -> Unit) {
 @Stable
 @Composable
 private fun NavController.currentScreenAsState(): State<RouteScreen> {
-    val selectedItem = remember { mutableStateOf<RouteScreen>(RouteScreen.Movie) }
+    val selectedItem = remember { mutableStateOf<RouteScreen>(RouteScreen.DEFAULT_TAB) }
 
     DisposableEffect(this) {
         val listener = NavController.OnDestinationChangedListener { _, destination, _ ->
