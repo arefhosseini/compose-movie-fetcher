@@ -21,12 +21,15 @@ class SignInNavigator {
         data class OnPasswordChange(
             val value: String
         ) : Event()
+
+        object TogglePasswordVisibility : Event()
     }
 
     data class State(
         val email: String = "",
         val password: String = "",
-        val loading: Boolean = false
+        val loading: Boolean = false,
+        val passwordVisible: Boolean = false
     ) : ViewState
 
     sealed class Effect : ViewSideEffect {

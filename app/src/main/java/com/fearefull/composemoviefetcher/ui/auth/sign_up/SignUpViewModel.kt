@@ -3,7 +3,6 @@ package com.fearefull.composemoviefetcher.ui.auth.sign_up
 import androidx.lifecycle.viewModelScope
 import com.fearefull.composemoviefetcher.base.BaseViewModel
 import com.fearefull.composemoviefetcher.data.remote.RepositoryAuthenticator
-import com.fearefull.composemoviefetcher.ui.auth.sign_in.SignInNavigator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -32,6 +31,11 @@ class SignUpViewModel @Inject constructor(
             is SignUpNavigator.Event.OnPasswordChange -> {
                 setState {
                     copy(password = event.value)
+                }
+            }
+            is SignUpNavigator.Event.TogglePasswordVisibility -> {
+                setState {
+                    copy(passwordVisible = !passwordVisible)
                 }
             }
         }

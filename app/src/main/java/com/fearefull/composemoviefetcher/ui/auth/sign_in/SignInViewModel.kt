@@ -1,13 +1,10 @@
 package com.fearefull.composemoviefetcher.ui.auth.sign_in
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import com.fearefull.composemoviefetcher.base.BaseViewModel
 import com.fearefull.composemoviefetcher.data.remote.RepositoryAuthenticator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -34,6 +31,11 @@ class SignInViewModel @Inject constructor(
             is SignInNavigator.Event.OnPasswordChange -> {
                 setState {
                     copy(password = event.value)
+                }
+            }
+            is SignInNavigator.Event.TogglePasswordVisibility -> {
+                setState {
+                    copy(passwordVisible = !passwordVisible)
                 }
             }
         }
