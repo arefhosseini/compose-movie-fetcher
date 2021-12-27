@@ -25,7 +25,7 @@ object Dependencies {
     }
 
     object AndroidX {
-        const val palette = "androidx.palette:palette:1.0.0"
+        const val palette = "androidx.palette:palette-ktx:1.0.0"
         const val browser = "androidx.browser:browser:1.4.0-rc01"
         const val dataStore = "androidx.datastore:datastore-preferences:1.0.0"
 
