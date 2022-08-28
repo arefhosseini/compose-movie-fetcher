@@ -41,12 +41,11 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11
-        useIR = true
     }
 
     buildFeatures {
@@ -54,7 +53,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion Dependencies.Compose.version
+        kotlinCompilerExtensionVersion Dependencies.Compose.compilerVersion
     }
 }
 
@@ -102,7 +101,6 @@ dependencies {
     // Hilt
     implementation Dependencies.Hilt.android
     kapt Dependencies.Hilt.androidCompiler
-    implementation Dependencies.Hilt.viewmodel
     kapt Dependencies.Hilt.viewmodelCompiler
 
     // Network
@@ -115,7 +113,7 @@ dependencies {
 
     // Database
     implementation Dependencies.Room.runtime
-    annotationProcessor Dependencies.Room.compiler
+    kapt Dependencies.Room.compiler
 
     // StartUp
     implementation Dependencies.StartUp.runtime
