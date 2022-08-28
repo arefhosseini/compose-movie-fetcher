@@ -29,6 +29,7 @@ class MovieDetailsViewModel @Inject constructor(
     override fun handleEvents(event: MovieDetailsNavigator.Event) {
         when(event) {
 
+            else -> {}
         }
     }
 

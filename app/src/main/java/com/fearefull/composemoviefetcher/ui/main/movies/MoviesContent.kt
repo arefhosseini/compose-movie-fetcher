@@ -1,14 +1,14 @@
 package com.fearefull.composemoviefetcher.ui.main.movies
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.*
-import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyGridState
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
@@ -22,7 +22,7 @@ fun MoviesContent(
     movies: LazyPagingItems<Movie>,
     onItemClicked: (item: Movie) -> Unit = {}
 ) {
-    val listState = rememberLazyListState()
+    val listState = rememberLazyGridState()
     when (movies.loadState.refresh) {
         is LoadState.Loading -> {
             Column(
@@ -53,15 +53,14 @@ fun MoviesContent(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun MoviesGrid(
-    listState: LazyListState,
+    listState: LazyGridState,
     pagingItems: LazyPagingItems<Movie>,
     onItemClicked: (item: Movie) -> Unit = {}
 ) {
     LazyVerticalGrid(
-        cells = GridCells.Fixed(ThemeConstants.MOVIES_GRID_ITEM_CELL_COUNT),
+        columns = GridCells.Fixed(ThemeConstants.MOVIES_GRID_ITEM_CELL_COUNT),
         contentPadding = PaddingValues(
             start = ThemeConstants.HALF_PADDING.dp,
             end = ThemeConstants.HALF_PADDING.dp,

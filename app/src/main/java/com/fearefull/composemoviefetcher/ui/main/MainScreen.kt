@@ -9,7 +9,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import com.fearefull.composemoviefetcher.ui.MovieFetcherAppState
 import com.fearefull.composemoviefetcher.ui.components.MainBottomNavigation
-import com.google.accompanist.insets.ProvideWindowInsets
 
 /**
  * Created by Aref Hosseini on ۱۷/۱۱/۲۰۲۱.
@@ -19,24 +18,22 @@ import com.google.accompanist.insets.ProvideWindowInsets
 fun MainScreen(
     appState: MovieFetcherAppState
 ) {
-    ProvideWindowInsets() {
-        val mainState = rememberMainState()
-        Scaffold(
-            bottomBar = {
-                val currentSelectedItem by mainState.navController.currentScreenAsState()
-                MainBottomNavigation(
-                    selectedNavigation = currentSelectedItem,
-                    onNavigationSelected = mainState::onMainBottomNavigationSelected,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-        ) {
-            MainNavigation(
-                mainState = mainState,
-                appState = appState,
-                modifier = Modifier.padding(it)
+    val mainState = rememberMainState()
+    Scaffold(
+        bottomBar = {
+            val currentSelectedItem by mainState.navController.currentScreenAsState()
+            MainBottomNavigation(
+                selectedNavigation = currentSelectedItem,
+                onNavigationSelected = mainState::onMainBottomNavigationSelected,
+                modifier = Modifier.fillMaxWidth()
             )
         }
+    ) {
+        MainNavigation(
+            mainState = mainState,
+            appState = appState,
+            modifier = Modifier.padding(it)
+        )
     }
 }
 

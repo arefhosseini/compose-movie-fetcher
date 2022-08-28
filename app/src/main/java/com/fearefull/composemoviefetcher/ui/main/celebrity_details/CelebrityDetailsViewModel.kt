@@ -27,6 +27,7 @@ class CelebrityDetailsViewModel @Inject constructor(
     override fun handleEvents(event: CelebrityDetailsNavigator.Event) {
         when(event) {
 
+            else -> {}
         }
     }
 
